@@ -5,7 +5,7 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
-
+import booking from "./routes/booking.js";
 
 // 🔥 FORCE LOAD ENV FILE (IMPORTANT FOR ESM)
 dotenv.config({ path: "./.env" });
@@ -26,6 +26,7 @@ connectDB();
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/booking",booking);
 
 // Server start
 const PORT = process.env.PORT || 5000;

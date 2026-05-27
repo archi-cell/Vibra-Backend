@@ -1,0 +1,134 @@
+{
+  "info": {
+    "name": "Passport Dashboard API",
+    "description": "API collection for the Zebvo Passport Social Media Dashboard",
+    "_postman_id": "passport-dashboard-api-v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000",
+      "description": "Change to your deployed URL in production"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/api/health",
+        "description": "Check if the API is running"
+      }
+    },
+    {
+      "name": "Get Posts (Default)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/posts?page=1&limit=20",
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "20" },
+            { "key": "hideGibberish", "value": "true" }
+          ]
+        },
+        "description": "Fetch latest posts with default settings"
+      }
+    },
+    {
+      "name": "Get Posts (Filtered)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/posts?platform=reddit&category=Tatkal&sentiment=negative&sortBy=likes&order=desc",
+          "query": [
+            { "key": "platform", "value": "reddit" },
+            { "key": "category", "value": "Tatkal" },
+            { "key": "sentiment", "value": "negative" },
+            { "key": "sortBy", "value": "likes" },
+            { "key": "order", "value": "desc" }
+          ]
+        },
+        "description": "Filtered example: Reddit posts about Tatkal with negative sentiment"
+      }
+    },
+    {
+      "name": "Search Posts",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/posts?search=police+verification",
+          "query": [{ "key": "search", "value": "police verification" }]
+        },
+        "description": "Keyword search across post text and summaries"
+      }
+    },
+    {
+      "name": "Get Posts (Cluster View)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/posts?clusterView=true",
+          "query": [{ "key": "clusterView", "value": "true" }]
+        },
+        "description": "Returns one representative post per cluster"
+      }
+    },
+    {
+      "name": "Get Dashboard Stats",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/api/posts/stats",
+        "description": "Summary statistics for last 24 hours"
+      }
+    },
+    {
+      "name": "Translate Post",
+      "request": {
+        "method": "POST",
+        "url": "{{BASE_URL}}/api/translate",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"postId\": \"REPLACE_WITH_POST_ID\",\n  \"targetLang\": \"hi\"\n}"
+        },
+        "description": "Translate a post. targetLang options: en, hi, pa, es, fr, de, ar, zh, ru, ja"
+      }
+    },
+    {
+      "name": "Get Supported Languages",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/api/translate/languages"
+      }
+    },
+    {
+      "name": "Export CSV",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{BASE_URL}}/api/export/csv?platform=reddit",
+          "query": [{ "key": "platform", "value": "reddit" }]
+        },
+        "description": "Download filtered posts as CSV (max 500)"
+      }
+    },
+    {
+      "name": "Export PDF",
+      "request": {
+        "method": "GET",
+        "url": "{{BASE_URL}}/api/export/pdf",
+        "description": "Download posts as PDF (max 100)"
+      }
+    },
+    {
+      "name": "Trigger Manual Scrape",
+      "request": {
+        "method": "POST",
+        "url": "{{BASE_URL}}/api/scrape",
+        "description": "Start a scrape run manually (runs in background)"
+      }
+    }
+  ]
+}
